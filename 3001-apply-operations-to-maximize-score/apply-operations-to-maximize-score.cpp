@@ -14,26 +14,6 @@ public:
     }
     return result;
 }
-    vector<int> f(int n) {
-        vector<bool> isPrime(n + 1, true);
-        isPrime[0] = isPrime[1] = false;
-        
-        for (int i = 2; i * i <= n; i++) {
-            if (isPrime[i]) {
-                for (int j = i * i; j <= n; j += i) {
-                    isPrime[j] = false;
-                }
-            }
-        }
-        
-        vector<int> primes;
-        for (int i = 2; i <= n; i++) {
-            if (isPrime[i])
-                primes.push_back(i);
-        }
-        
-        return primes;
-    }
 
     vector<ll> next_gr_ele(vector<int>& prime_score,int n){
         stack<ll>st;
@@ -70,58 +50,28 @@ public:
         
         return ans;
     }
-    void buildSPF(int maxVal, vector<int>& spf) {
-        spf.resize(maxVal + 1);
-        for (int i = 1; i <= maxVal; i++) {
-            spf[i] = i;
-        }
-        for (int i = 2; i * i <= maxVal; i++) {
-            if (spf[i] == i) { // i is prime
-                for (int j = i * i; j <= maxVal; j += i) {
-                    if (spf[j] == j)
-                        spf[j] = i;
-                }
-            }
-        }
-    }
-    int getPrimeFactorCount(int x, const vector<int>& spf) {
-        int cnt = 0;
-        int last = -1;
-        while (x > 1) {
-            int factor = spf[x];
-            if (factor != last) {
-                cnt++;
-                last = factor;
-            }
-            x /= factor;
-        }
-        return cnt;
-    }
+    
+
 
     int maximumScore(vector<int>& nums, int k) {
         int n=nums.size();
-        int maxi=-1;
-        for(auto x:nums) maxi=max(maxi,x);
-        vector<int>prime=f(maxi);
         vector<int>prime_score(n);
 
-        // for(int i=0;i<n;i++){
-        //     int cnt=0;
-        //     for (int p : prime) {
-        //         if(p>nums[i]) break;
-        //         if(nums[i]%p==0) cnt++;
-        //     }
-        //     prime_score[i]=cnt;
-        // }
-        vector<int> spf;
-        buildSPF(maxi, spf);
-        
-        // Use SPF to compute prime_score for each element in nums
-        // vector<int> prime_score(n);
-        for (int i = 0; i < n; i++) {
-            prime_score[i] = getPrimeFactorCount(nums[i], spf);
+        for(int i=0;i<n;i++){
+            int num=nums[i];
+            int cnt=0;
+            for(int fact=2;fact<=sqrt(num);fact++){
+                if(num%fact==0){
+                    cnt++;
+                    while(num%fact==0){
+                        num/=fact;
+                    }
+                }
+            }
+            if(num>=2) cnt++; //in this case nums itself a prime factor
+            prime_score[i]=cnt;
         }
-
+    
         vector<ll>nge=next_gr_ele(prime_score,n);
         vector<ll>pge=pre_gr_ele(prime_score,n);
         vector<ll>no_of_subarr(n);
