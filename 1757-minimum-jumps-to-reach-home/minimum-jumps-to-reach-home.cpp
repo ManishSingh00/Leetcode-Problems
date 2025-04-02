@@ -1,33 +1,33 @@
-#define ll long long int
 class Solution {
 public:
-    unordered_set<int>st;
-    int dp[10005][2];
-    int f(int curr,bool back,int tar,int a,int b){
-        if(curr==tar) return 0;
-        if(curr<0 || curr>10001 || st.count(curr)!=0) return 1e9;
-        if(dp[curr][back]!=-1) return dp[curr][back];
-
-        // ll ans=INT_MAX;
-        // moving right
-        dp[curr][back]=1+f(curr+a,false,tar,a,b);
-
-        // moving left
-        if(back==false){
-            dp[curr][back] = min(dp[curr][back],1+f(curr-b,true,tar,a,b));
-        }
-
-        return dp[curr][back];
-    }
     int minimumJumps(vector<int>& arr, int a, int b, int x) {
-        int n=arr.size();
-        for(int i=0;i<n;i++){
-            st.insert(arr[i]);
+        unordered_set<int>st(arr.begin(),arr.end());
+        queue<pair<int,int>>q;
+        vector<int>vis_forward(10000,0);
+        vector<int>vis_backward(10000,0);
+        q.push({0,0});//{x=0,no backward move} 1 represent backward move
+        int jump=0;
+        vis_forward[0]=1;
+        while(q.size()>0){
+            int len=q.size();
+            while(len--){
+                int curr=q.front().first;
+                int check=q.front().second;
+                q.pop();
+                if(curr==x) return jump;
+                if(curr+a<10000 && vis_forward[curr+a]==0 && st.count(curr+a)==0){
+                    q.push({curr+a,0});
+                    vis_forward[curr+a]=1;
+                    // jump++;
+                }
+                if(check==0 && curr-b>=0 && vis_backward[curr-b]==0 && st.count(curr-b)==0){
+                    q.push({curr-b,1});
+                    vis_backward[curr-b]=1;
+                    // jump++;
+                }
+            }
+            jump++;
         }
-        memset(dp,-1,sizeof(dp));
-        ll ans=f(0,false,x,a,b);
-        cout<<ans<<endl;
-        if(ans>1e9) return -1;
-        return ans;
+        return -1;
     }
 };
