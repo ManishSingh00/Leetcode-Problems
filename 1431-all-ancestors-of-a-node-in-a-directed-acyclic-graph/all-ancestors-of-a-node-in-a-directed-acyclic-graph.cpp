@@ -16,22 +16,15 @@ public:
             auto curr=q.front();
             q.pop();
             for(auto v:gr[curr]){
-                set<int>st;
                 indeg[v]--;
-                for(auto x:ans[curr]){
-                    st.insert(x);
-                }
-                st.insert(curr);
-                for(auto x:st) ans[v].insert(x);
-
                 if(indeg[v]==0) q.push(v);
+                ans[v].insert(ans[curr].begin(),ans[curr].end());
+                ans[v].insert(curr);
             }
         }
         vector<vector<int>>arr(n);
         for(int i=0;i<n;i++){
-            for(auto x:ans[i]){
-                arr[i].push_back(x);
-            }
+            arr[i] = vector<int>(ans[i].begin(),ans[i].end());
         }
         return arr;
     }
