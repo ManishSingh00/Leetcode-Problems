@@ -16,10 +16,13 @@ public:
                         i++;
                     }
                     temp_cnt += (cnt*(cnt+1))/2;
+                    // temp_cnt is the the number of substring in which ch is not present
                 }
             }
-            cnt += (tot_cnt - temp_cnt);
+            cnt += (tot_cnt - temp_cnt); // total number of substring minus no. of substring in wich ch is present will give the no. of substring in which ch is present 
         }
         return cnt;
     }
 };
+
+// CONTRIBUTION TECHNIQUE
