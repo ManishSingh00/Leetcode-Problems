@@ -5,7 +5,7 @@ public:
     ll f(int i,int j,vector<int>& nums){
         if(i>j) return 0;
         if(i==j){
-            return nums[i];
+            return max(nums[i],nums[j]);
         }
         if(dp[i][j]!=-1) return dp[i][j];
         ll left = nums[i] + min(f(i+2,j,nums),f(i+1,j-1,nums));
