@@ -12,10 +12,10 @@ public:
         }
         sort(arr.begin(),arr.end());
 
-        int i = 0;
+        int i = 0,j = 0;
+        int temp = 0;
         while(i<m){
-            int j = 0;
-            int temp = 0;
+            // int j = 0;
 
             while(j<n && arr[j].first<=worker[i]){
                 temp = max(temp,arr[j].second);
