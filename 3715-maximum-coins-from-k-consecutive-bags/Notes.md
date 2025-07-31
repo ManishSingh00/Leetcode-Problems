@@ -1,0 +1,1 @@
+<h2>maximum-coins-from-k-consecutive-bags Notes</h2><hr>[ Time taken: 1 hr 7 m 30 s ]
