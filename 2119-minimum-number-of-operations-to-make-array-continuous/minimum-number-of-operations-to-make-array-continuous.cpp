@@ -1,12 +1,13 @@
 class Solution {
 public:
     int minOperations(vector<int>& nums) {
-        int n = nums.size();
+        int n = nums.size(); 
         sort(nums.begin(),nums.end());
         nums.erase(unique(nums.begin(), nums.end()), nums.end());
         int ans = INT_MAX;
-        cout<<n<<endl;
-        for(int i=0;i<n;i++){
+        // cout<<n<<endl;
+
+        for(int i=0;i<nums.size();i++){
             int l = nums[i];
             int r = l+n-1;
         
