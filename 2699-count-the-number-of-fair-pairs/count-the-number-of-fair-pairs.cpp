@@ -1,20 +1,27 @@
+#include <ext/pb_ds/assoc_container.hpp>
+#include <ext/pb_ds/tree_policy.hpp>
+#define ll long long int
+using namespace __gnu_pbds;
+
+using ordered_set = tree<pair<ll,int>, null_type, less<pair<ll,int>>, rb_tree_tag, tree_order_statistics_node_update>;
 class Solution {
 public:
-    long long f(vector<int>& nums, int val){
-        int lo = 0, hi = nums.size()-1;
-        long long ans = 0;
-        while(lo < hi){
-            if(nums[lo] + nums[hi] < val){
-                ans += (hi - lo);
-                lo++;
-            }
-            else hi--;
+    long long countFairPairs(vector<int>& nums, int lower, int upper) {
+        int n = nums.size();
+        ordered_set os;
+        int id = 0;
+
+        ll ans = 0;
+        for(int i=0;i<n;i++){
+            int left = lower - nums[i];
+            int right = upper - nums[i];
+
+            ll cnt = os.order_of_key({right,INT_MAX}) - os.order_of_key({left,INT_MIN});
+            ans += cnt;
+
+            os.insert({nums[i],id++});
         }
 
         return ans;
-    }
-    long long countFairPairs(vector<int>& nums, int lower, int upper) {
-        sort(nums.begin(),nums.end());
-        return f(nums, upper+1) - f(nums, lower);
     }
 };
