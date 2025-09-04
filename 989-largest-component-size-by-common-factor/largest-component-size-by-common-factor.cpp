@@ -32,10 +32,11 @@ public:
             for(int fact =2;fact<=sqrt(v);fact++){
                 if(x%fact == 0){
                     Union(v,fact,nums);
-                    while(x%fact == 0) x/=fact;
+                    Union(v,v/fact,nums);
+                    // while(x%fact == 0) x/=fact;
                 }
             }
-            if(x>1) Union(v,x,nums);
+            // if(x>1) Union(v,x,nums);
         }
         int ans = -1;
         unordered_map<int,int>mp;
