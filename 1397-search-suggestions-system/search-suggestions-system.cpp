@@ -6,21 +6,19 @@ public:
         sort(arr.begin(),arr.end());
         vector<vector<string>>ans;
 
+        string search = "";
         for(int i=0;i<m;i++){
-            string tar = word.substr(0,i+1);
-            int  cnt = 0;
-            // cout<<"hello"<<endl;
+            search += word[i];
+
+            int idx = lower_bound(arr.begin(),arr.end(),search) - arr.begin();
+            cout<<idx<<" ";
+            int cnt = 0;
             vector<string>st;
-            for(int j=0;j<n;j++){
-                string temp = arr[j];
-                if(temp.length() >= tar.length()){
-                    // cout<<"hello2"<<endl;
-                    if(temp.substr(0,i+1) == tar && cnt < 3){
-                        cnt++;
-                        st.push_back(temp);
-                    }
+            for(int j=idx;j<n && cnt < 3;j++){
+                if(arr[j].substr(0,search.size()) == search){
+                    cnt++;
+                    st.push_back(arr[j]);
                 }
-                // cout<<"hello3"<<endl;
             }
             ans.push_back(st);
         }
