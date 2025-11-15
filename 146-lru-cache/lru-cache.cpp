@@ -2,7 +2,7 @@ class LRUCache {
 public:
     int cap;
     list<pair<int,int>>l;
-    unordered_map<int,list<pair<int,int>>::iterator>mp;
+    unordered_map<int,list<pair<int,int>>::iterator>mp; // <key,value>,  value is not list of iterator, it is just a single iterator corresponding to position of key in list
 
     LRUCache(int capacity) {
         cap = capacity;    
@@ -24,7 +24,6 @@ public:
         if(mp.find(key) != mp.end()){
             l.erase(mp[key]);
         }
-
         if(l.size() == cap){
             auto it = l.back();
             mp.erase(it.first);
