@@ -8,7 +8,8 @@ public:
 
         while(n > 0){
             if(n % 2 == 0){
-                ans += pow(2,i);
+                // ans += pow(2,i);
+                ans += (1<<i);
             }
             i++;
             n /= 2;
